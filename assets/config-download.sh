@@ -1,3 +1,5 @@
+#!/bin/bash
+
 cd /tmp
 
 mkdir -p $HOME/.config/
