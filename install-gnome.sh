@@ -76,14 +76,15 @@ pacman -S
 pacman -S --needed --noconfirm --overwrite \* brave-bin sublime-text-4
 
 
-# rsync -r /install/assets/root_user/usr/ /usr/
-# chmod +x /usr/local/bin/*
-fc-cache --force
+wget https://raw.githubusercontent.com/dumanshr/arch-install/master/assets/root_user/usr/share/nautilus-python/extensions/open-in-alacritty.py
 
-# # copy autostart script and desktop file to $HOME of normal user
-# NORMAL_USER=$(id -un 1000)
-# su ${NORMAL_USER} bash -c "rsync -r /install/assets/regular_user/ /home/${NORMAL_USER}/"
-# chmod +x /home/${NORMAL_USER}/.local/bin/*
+fc-cache --force
+wget https://raw.githubusercontent.com/dumanshr/arch-install/master/assets/config-download.sh
+chmod +x config-download.sh
+NORMAL_USER=$(id -un 1000)
+cd /home/${NORMAL_USER}
+su ${NORMAL_USER} ./config-download.sh
+chmod +x /home/${NORMAL_USER}/.local/bin/*
 
 
 
