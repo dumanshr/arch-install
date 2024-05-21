@@ -75,7 +75,7 @@ pacman -Syyu
 pacman -S 
 pacman -S --needed --noconfirm --overwrite \* brave-bin sublime-text-4
 
-mkdir -p
+mkdir -p /usr/share/nautilus-python/extensions
 curl -o /usr/share/nautilus-python/extensions/open-in-alacritty.py https://raw.githubusercontent.com/dumanshr/arch-install/master/assets/root_user/usr/share/nautilus-python/extensions/open-in-alacritty.py
 
 curl -o /tmp/config-download.sh https://raw.githubusercontent.com/dumanshr/arch-install/master/assets/config-download.sh
