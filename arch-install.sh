@@ -155,7 +155,7 @@ pacstrap /mnt \
 
 mkdir -p /mnt/install/
 cp after-chroot.sh /mnt/install/
-cp install-de.sh /mnt/install/
+cp install-gnome.sh /mnt/install/
 cp envfile /mnt/install/
 cp -r assets /mnt/install/
 

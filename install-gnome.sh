@@ -76,14 +76,14 @@ pacman -S
 pacman -S --needed --noconfirm --overwrite \* brave-bin sublime-text-4
 
 
-rsync -r /install/assets/root_user/usr/ /usr/
-chmod +x /usr/local/bin/*
+# rsync -r /install/assets/root_user/usr/ /usr/
+# chmod +x /usr/local/bin/*
 fc-cache --force
 
-# copy autostart script and desktop file to $HOME of normal user
-NORMAL_USER=$(id -un 1000)
-su ${NORMAL_USER} bash -c "rsync -r /install/assets/regular_user/ /home/${NORMAL_USER}/"
-chmod +x /home/${NORMAL_USER}/.local/bin/*
+# # copy autostart script and desktop file to $HOME of normal user
+# NORMAL_USER=$(id -un 1000)
+# su ${NORMAL_USER} bash -c "rsync -r /install/assets/regular_user/ /home/${NORMAL_USER}/"
+# chmod +x /home/${NORMAL_USER}/.local/bin/*
 
 
 
