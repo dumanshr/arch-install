@@ -1,0 +1,7 @@
+hostname='MyPC'
+username='duman'
+password='1235'
+timezone='America/New_York'
+locale='en_US.UTF-8'
+desktop=y
+keyboard=us

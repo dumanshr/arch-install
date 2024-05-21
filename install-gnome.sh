@@ -1,0 +1,89 @@
+#!/bin/bash
+
+pacman -S --needed --noconfirm --overwrite \* \
+	sof-firmware alsa-firmware \
+	gnome-shell gdm alacritty flatpak \
+	pipewire-pulse pipewire-alsa pipewire-jack wireplumber
+
+pacman -S --needed --noconfirm --overwrite \* \
+	nvidia switcheroo-control
+
+pacman -S --needed --noconfirm --overwrite \* \
+	nautilus \
+	gnome-software \
+	gnome-backgrounds \
+	gnome-control-center \
+	xdg-user-dirs-gtk \
+	xdg-desktop-portal-gnome \
+	gnome-keyring \
+	gvfs-afc gvfs-goa gvfs-google gvfs-onedrive\
+	gvfs-gphoto2 gvfs-mtp gvfs-nfs gvfs-smb \
+	evince totem loupe snapshot \
+	gnome-font-viewer \
+	gnome-disk-utility \
+	gnome-remote-desktop \
+	gnome-user-share \
+	tracker3-miners \
+	gnome-calculator \
+	python-nautilus \
+	xclip wl-clipboard
+
+	
+
+# Thumbnails
+pacman -S --needed --noconfirm --overwrite \* \
+	tumbler \
+	ffmpegthumbnailer \
+	poppler-glib\
+	libgsf \
+	libgepub \
+	libopenraw \
+	freetype2\
+	webp-pixbuf-loader\
+	gnome-epub-thumbnailer
+
+# install following
+pacman -S --needed --noconfirm --overwrite \* \
+	neovim micro \
+	rsync \
+	less \
+	git \
+	curl wget \
+	tmux \
+	p7zip \
+	qt6-base qt6-wayland \
+	chromium \
+	ffmpeg yt-dlp \
+	gnu-free-fonts \
+	ttf-roboto-mono-nerd
+
+
+ln -sf /dev/null /etc/udev/rules.d/61-gdm.rules
+ln -sf alacritty /usr/bin/xterm
+systemctl enable gdm
+systemctl enable switcheroo-control
+systemctl enable bluetooth
+
+pacman-key --recv-key 3056513887B78AEB --keyserver keyserver.ubuntu.com
+pacman-key --lsign-key 3056513887B78AEB
+pacman -U 'https://cdn-mirror.chaotic.cx/chaotic-aur/chaotic-keyring.pkg.tar.zst'
+pacman -U 'https://cdn-mirror.chaotic.cx/chaotic-aur/chaotic-mirrorlist.pkg.tar.zst'
+echo '[chaotic-aur]'>>/etc/pacman.conf
+echo 'Include = /etc/pacman.d/chaotic-mirrorlist' >> /etc/pacman.conf
+
+pacman -Syyu
+pacman -S 
+pacman -S --needed --noconfirm --overwrite \* brave-bin sublime-text-4
+
+
+rsync -r /install/assets/root_user/usr/ /usr/
+chmod +x /usr/local/bin/*
+fc-cache --force
+
+# copy autostart script and desktop file to $HOME of normal user
+NORMAL_USER=$(id -un 1000)
+su ${NORMAL_USER} bash -c "rsync -r /install/assets/regular_user/ /home/${NORMAL_USER}/"
+chmod +x /home/${NORMAL_USER}/.local/bin/*
+
+
+

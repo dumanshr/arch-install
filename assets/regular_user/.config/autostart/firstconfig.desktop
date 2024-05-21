@@ -1,0 +1,5 @@
+[Desktop Entry]
+Name=Neovim
+Exec=/usr/bin/bash -c "$HOME/.local/bin/after-reboot.sh"
+Terminal=true
+Type=Application
