@@ -76,14 +76,18 @@ pacman -S
 pacman -S --needed --noconfirm --overwrite \* brave-bin sublime-text-4
 
 mkdir -p /usr/share/nautilus-python/extensions
-curl -o /usr/share/nautilus-python/extensions/open-in-alacritty.py https://raw.githubusercontent.com/dumanshr/arch-install/master/assets/root_user/usr/share/nautilus-python/extensions/open-in-alacritty.py
+curl -o /usr/share/nautilus-python/extensions/open-in-terminal.py https://raw.githubusercontent.com/dumanshr/arch-install/master/assets/open-in-terminal.py
+
+
+wget --no-check-certificate 'https://docs.google.com/uc?export=download&id=16NGDYZo44nQTO7ZNm0eAI_NL8CkEB6_o' -O /tmp/win11-fonts.tar.zst
+pacman -U --noconfirm '/tmp/win11-fonts.tar.zst'
 
 curl -o /tmp/config-download.sh https://raw.githubusercontent.com/dumanshr/arch-install/master/assets/config-download.sh
 chmod +x /tmp/config-download.sh
 NORMAL_USER=$(id -un 1000)
 cd /home/${NORMAL_USER}
 su ${NORMAL_USER} /tmp/config-download.sh
-chmod +x /home/${NORMAL_USER}/.local/bin/*
+
 
 fc-cache --force
 
