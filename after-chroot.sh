@@ -6,6 +6,10 @@
 ln -sf nvim /usr/bin/vi
 systemctl enable NetworkManager
 
+mkdir -p /etc/pacman.d/hooks
+touch /etc/pacman.d/hooks/60-mkinitcpio-remove.hook
+touch /etc/pacman.d/hooks/90-mkinitcpio-install.hook
+
 
 sed -i "/^#$locale/s/#//" /etc/locale.gen
 echo "LANG=$locale" >>/etc/locale.conf
@@ -60,6 +64,8 @@ sed -i "/^default_image/d" /etc/mkinitcpio.d/linux.preset
 sed -i "/^#default_uki/s/#//" /etc/mkinitcpio.d/linux.preset
 sed -i "/^#default_options/s/#//" /etc/mkinitcpio.d/linux.preset
 
+rm /etc/pacman.d/hooks/60-mkinitcpio-remove.hook
+rm /etc/pacman.d/hooks/90-mkinitcpio-install.hook
 
 mkinitcpio -P
 
