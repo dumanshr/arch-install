@@ -76,15 +76,17 @@ pacman -S
 pacman -S --needed --noconfirm --overwrite \* brave-bin sublime-text-4
 
 
-wget https://raw.githubusercontent.com/dumanshr/arch-install/master/assets/root_user/usr/share/nautilus-python/extensions/open-in-alacritty.py
+curl -o /usr/share/nautilus-python/extensions/open-in-alacritty.py https://raw.githubusercontent.com/dumanshr/arch-install/master/assets/root_user/usr/share/nautilus-python/extensions/open-in-alacritty.py
 
-fc-cache --force
-wget https://raw.githubusercontent.com/dumanshr/arch-install/master/assets/config-download.sh
-chmod +x config-download.sh
+curl -o /tmp/config-download.sh https://raw.githubusercontent.com/dumanshr/arch-install/master/assets/config-download.sh
+chmod +x /tmp/config-download.sh
 NORMAL_USER=$(id -un 1000)
 cd /home/${NORMAL_USER}
-su ${NORMAL_USER} ./config-download.sh
+su ${NORMAL_USER} /tmp/config-download.sh
 chmod +x /home/${NORMAL_USER}/.local/bin/*
+
+fc-cache --force
+
 
 
 
