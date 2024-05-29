@@ -149,7 +149,7 @@ fi
 
 
 pacstrap /mnt \
-	base base-devel mkinitcpio linux linux-headers linux-firmware intel-ucode \
+	base base-devel mkinitcpio linux-headers linux-firmware intel-ucode \
 	terminus-font networkmanager neovim micro tmux git wget rsync \
 	e2fsprogs btrfs-progs dosfstools exfat-utils mtools ntfs-3g
 

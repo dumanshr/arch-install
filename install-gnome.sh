@@ -72,7 +72,7 @@ echo '[chaotic-aur]'>>/etc/pacman.conf
 echo 'Include = /etc/pacman.d/chaotic-mirrorlist' >> /etc/pacman.conf
 
 pacman -Syyu
-pacman -S 
+
 pacman -S --needed --noconfirm --overwrite \* brave-bin sublime-text-4
 
 mkdir -p /usr/share/nautilus-python/extensions

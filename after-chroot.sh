@@ -6,11 +6,6 @@
 ln -sf nvim /usr/bin/vi
 systemctl enable NetworkManager
 
-mkdir -p /etc/pacman.d/hooks
-touch /etc/pacman.d/hooks/60-mkinitcpio-remove.hook
-touch /etc/pacman.d/hooks/90-mkinitcpio-install.hook
-
-
 sed -i "/^#$locale/s/#//" /etc/locale.gen
 echo "LANG=$locale" >>/etc/locale.conf
 echo "KEYMAP=$keyboard">/etc/vconsole.conf
@@ -36,7 +31,8 @@ ROOT_UUID=$(blkid -s UUID -o value $(bootctl -R ))
 #echo "root=UUID=${ROOT_UUID} rootflags=subvol=@ rw quiet splash nvidia_drm.modeset=1" >/etc/kernel/cmdline
 
 #ext4
-echo "root=UUID=${ROOT_UUID} rw quiet splash nvidia_drm.modeset=1" >/etc/kernel/cmdline
+kernel_cmdline="root=UUID=${ROOT_UUID} rw quiet splash nvidia_drm.modeset=1"
+echo $kernel_cmdline >/etc/kernel/cmdline
 
 # Systemd Boot Uses PRETTY_NAME from /etc/os-release to display on Boot Order
 # If you want to install mulitple OS, then all named Arch Linux is very confusing.So Put Hostname as PRETTY_NAME,
@@ -59,14 +55,21 @@ bootctl install
 echo "timeout 	3" >/efi/loader/loader.conf
 echo "default 	@saved">>/efi/loader/loader.conf
 
-sed -i "/^PRESETS/c\PRESETS=('default')" /etc/mkinitcpio.d/linux.preset
-sed -i "/^default_image/d" /etc/mkinitcpio.d/linux.preset
-sed -i "/^#default_uki/s/#//" /etc/mkinitcpio.d/linux.preset
-sed -i "/^#default_options/s/#//" /etc/mkinitcpio.d/linux.preset
+MACHINE_ID=$(cat /etc/machine-id)
+mkdir -p /efi/${MACHINE_ID}
 
-rm /etc/pacman.d/hooks/60-mkinitcpio-remove.hook
-rm /etc/pacman.d/hooks/90-mkinitcpio-install.hook
+EFI_DIR="/efi/${MACHINE_ID}"
+echo "EFI_DIR='$EFI_DIR'"
+echo "ALL_kver=\"\${EFI_DIR}/vmlinuz-linux\""
+echo "PRESETS=('default')"
+echo "default_image=\"\${EFI_DIR}/initramfs-linux.img\""
 
-mkinitcpio -P
+
+echo "title $hostname" >/efi/loader/entries/${MACHINE_ID}-linux.conf
+echo "linux /${MACHINE_ID}/vmlinuz-linux" >>/efi/loader/entries/${MACHINE_ID}-linux.conf
+echo "initrd /${MACHINE_ID}/initramfs-linux.img" >>/efi/loader/entries/${MACHINE_ID}-linux.conf
+echo "options $kernel_cmdline" >>/efi/loader/entries/${MACHINE_ID}-linux.conf
+
+pacman -S --needed --noconfirm linux
 
 rm -r /install
