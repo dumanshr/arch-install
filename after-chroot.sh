@@ -3,10 +3,10 @@
 
 . /install/envfile
 
-cat /proc/cpuinfo | grep -i vendor_id | grep -i intel
+cat /proc/cpuinfo | grep -i vendor_id | grep -i intel > /dev/null
 intel_cpu=$?
 
-cat /proc/cpuinfo | grep -i vendor_id | grep -i amd
+cat /proc/cpuinfo | grep -i vendor_id | grep -i amd > /dev/null
 amd_cpu=$?
 
 if [[ $intel_cpu -eq 0 ]]; then
@@ -46,7 +46,7 @@ ROOT_UUID=$(blkid -s UUID -o value $(bootctl -R ))
 
 #ext4
 kernel_cmdline="root=UUID=${ROOT_UUID} rw quiet splash"
-lspci | grep -i nvidia
+lspci | grep -i nvidia >/dev/null
 
 if [[ $? -eq 0 ]]; then
 	kernel_cmdline="$kernel_cmdline nvidia_drm.modeset=1"
