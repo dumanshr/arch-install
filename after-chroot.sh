@@ -59,10 +59,10 @@ MACHINE_ID=$(cat /etc/machine-id)
 mkdir -p /efi/${MACHINE_ID}
 
 EFI_DIR="/efi/${MACHINE_ID}"
-echo "EFI_DIR='$EFI_DIR'"
-echo "ALL_kver=\"\${EFI_DIR}/vmlinuz-linux\""
-echo "PRESETS=('default')"
-echo "default_image=\"\${EFI_DIR}/initramfs-linux.img\""
+echo "EFI_DIR='$EFI_DIR'" > /etc/mkinitcpio.d/linux.preset
+echo "ALL_kver=\"\${EFI_DIR}/vmlinuz-linux\"" >>/etc/mkinitcpio.d/linux.preset
+echo "PRESETS=('default')" >>/etc/mkinitcpio.d/linux.preset
+echo "default_image=\"\${EFI_DIR}/initramfs-linux.img\"" >>/etc/mkinitcpio.d/linux.preset
 
 
 echo "title $hostname" >/efi/loader/entries/${MACHINE_ID}-linux.conf
