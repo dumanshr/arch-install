@@ -144,14 +144,14 @@ if [[ -z $premounted ]]; then
 	mount --mkdir $EFI_DEV /mnt/efi
 fi
 
-
-
+pacman-key --init
+pacman-key --populate
 
 
 pacstrap /mnt \
 	base base-devel mkinitcpio linux-headers linux-firmware intel-ucode \
 	terminus-font networkmanager neovim micro tmux git wget rsync \
-	e2fsprogs btrfs-progs dosfstools exfat-utils mtools ntfs-3g
+	e2fsprogs btrfs-progs dosfstools ntfs-3g
 
 mkdir -p /mnt/install/
 cp after-chroot.sh /mnt/install/
