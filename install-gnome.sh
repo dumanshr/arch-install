@@ -5,8 +5,13 @@ pacman -S --needed --noconfirm --overwrite \* \
 	gnome-shell gdm alacritty flatpak \
 	pipewire-pulse pipewire-alsa pipewire-jack wireplumber
 
-pacman -S --needed --noconfirm --overwrite \* \
-	nvidia switcheroo-control
+lspci | grep -i nvidia
+
+if [[ $? -eq 0 ]]; then
+	pacman -S --needed --noconfirm --overwrite \* \
+		nvidia switcheroo-control
+fi
+
 
 pacman -S --needed --noconfirm --overwrite \* \
 	nautilus \

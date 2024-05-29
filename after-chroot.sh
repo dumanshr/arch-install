@@ -3,6 +3,21 @@
 
 . /install/envfile
 
+cat /proc/cpuinfo | grep -i vendor_id | grep -i intel
+intel_cpu=$?
+
+cat /proc/cpuinfo | grep -i vendor_id | grep -i amd
+amd_cpu=$?
+
+if [[ $intel_cpu -eq 0 ]]; then
+	pacman -S intel-ucode
+elif [[ $amd_cpu -eq 0 ]]; then
+	pacman -S amd-ucode
+else
+	echo "CPU manufacturer could not be determined"
+fi
+
+
 ln -sf nvim /usr/bin/vi
 systemctl enable NetworkManager
 
@@ -17,7 +32,6 @@ locale-gen
 
 sed -i '/%wheel ALL=(ALL:ALL) ALL/s/^#[ ]*//' /etc/sudoers
 useradd -m -G wheel $username
-echo -n "$username:$password" | chpasswd
 
 echo $hostname > /etc/hostname
 echo "127.0.0.1 	localhost" > /etc/hosts
@@ -31,7 +45,12 @@ ROOT_UUID=$(blkid -s UUID -o value $(bootctl -R ))
 #echo "root=UUID=${ROOT_UUID} rootflags=subvol=@ rw quiet splash nvidia_drm.modeset=1" >/etc/kernel/cmdline
 
 #ext4
-kernel_cmdline="root=UUID=${ROOT_UUID} rw quiet splash nvidia_drm.modeset=1"
+kernel_cmdline="root=UUID=${ROOT_UUID} rw quiet splash"
+lspci | grep -i nvidia
+
+if [[ $? -eq 0 ]]; then
+	kernel_cmdline="$kernel_cmdline nvidia_drm.modeset=1"
+fi
 echo $kernel_cmdline >/etc/kernel/cmdline
 
 # Systemd Boot Uses PRETTY_NAME from /etc/os-release to display on Boot Order
@@ -70,6 +89,16 @@ echo "linux /${MACHINE_ID}/vmlinuz-linux" >>/efi/loader/entries/${MACHINE_ID}-li
 echo "initrd /${MACHINE_ID}/initramfs-linux.img" >>/efi/loader/entries/${MACHINE_ID}-linux.conf
 echo "options $kernel_cmdline" >>/efi/loader/entries/${MACHINE_ID}-linux.conf
 
+
+
+
+
 pacman -S --needed --noconfirm linux
 
 rm -r /install
+
+if [[ -n $password ]]; then
+	echo -n "$username:$password" | chpasswd
+else
+	passwd $username
+fi
