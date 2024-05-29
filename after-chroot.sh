@@ -47,8 +47,8 @@ ROOT_UUID=$(blkid -s UUID -o value $(bootctl -R ))
 #ext4
 kernel_cmdline="root=UUID=${ROOT_UUID} rw quiet splash"
 lspci | grep -i nvidia >/dev/null
-
-if [[ $? -eq 0 ]]; then
+nvidia_gpu=$?
+if [[ $nvidia_gpu -eq 0 ]]; then
 	kernel_cmdline="$kernel_cmdline nvidia_drm.modeset=1"
 fi
 echo $kernel_cmdline >/etc/kernel/cmdline
@@ -64,6 +64,7 @@ sed -i "/^PRETTY_NAME=/s/PRETTY_NAME.*/PRETTY_NAME=\"Arch ${hostname//Arch/}\"/"
 
 
 if [[ x${desktop} == xy ||  x${desktop} == xY  ]]; then
+	desktop=y
 	echo "Installing desktop environment"
 	bash /install/install-gnome.sh
 fi
@@ -90,10 +91,14 @@ echo "initrd /${MACHINE_ID}/initramfs-linux.img" >>/efi/loader/entries/${MACHINE
 echo "options $kernel_cmdline" >>/efi/loader/entries/${MACHINE_ID}-linux.conf
 
 
+if [[ $nvidia_gpu -eq 0 && x${desktop} == xy ]]; then
+	pacman -S --needed --noconfirm --overwrite \* \
+		nvidia switcheroo-control linux
+else
+	pacman -S --needed --noconfirm linux
+fi
 
 
-
-pacman -S --needed --noconfirm linux
 
 rm -r /install
 

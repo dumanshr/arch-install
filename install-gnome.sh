@@ -5,12 +5,7 @@ pacman -S --needed --noconfirm --overwrite \* \
 	gnome-shell gdm alacritty flatpak \
 	pipewire-pulse pipewire-alsa pipewire-jack wireplumber
 
-lspci | grep -i nvidia >/dev/null
 
-if [[ $? -eq 0 ]]; then
-	pacman -S --needed --noconfirm --overwrite \* \
-		nvidia switcheroo-control
-fi
 
 
 pacman -S --needed --noconfirm --overwrite \* \
