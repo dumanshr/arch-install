@@ -10,9 +10,9 @@ cat /proc/cpuinfo | grep -i vendor_id | grep -i amd
 amd_cpu=$?
 
 if [[ $intel_cpu -eq 0 ]]; then
-	pacman -S intel-ucode
+	pacman -S --needed --noconfirm intel-ucode
 elif [[ $amd_cpu -eq 0 ]]; then
-	pacman -S amd-ucode
+	pacman -S --needed --noconfirm amd-ucode
 else
 	echo "CPU manufacturer could not be determined"
 fi
