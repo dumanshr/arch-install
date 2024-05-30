@@ -2,7 +2,7 @@
 
 pacman -S --needed --noconfirm --overwrite \* \
 	sof-firmware alsa-firmware \
-	gnome-shell gdm alacritty flatpak \
+	gnome-shell gdm alacritty flatpak switcheroo-control\
 	pipewire-pulse pipewire-alsa pipewire-jack wireplumber
 
 

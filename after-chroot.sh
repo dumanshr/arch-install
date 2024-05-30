@@ -93,7 +93,7 @@ echo "options $kernel_cmdline" >>/efi/loader/entries/${MACHINE_ID}-linux.conf
 
 if [[ $nvidia_gpu -eq 0 && x${desktop} == xy ]]; then
 	pacman -S --needed --noconfirm --overwrite \* \
-		nvidia switcheroo-control linux
+		nvidia linux
 else
 	pacman -S --needed --noconfirm linux
 fi
