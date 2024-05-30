@@ -5,3 +5,4 @@ timezone='America/New_York'
 locale='en_US.UTF-8'
 desktop=y
 keyboard=us
+root_partition=/dev/nvme0n1p3 # leave it empty if you have premounted or if you want the installer to ask you later.
