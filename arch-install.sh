@@ -4,7 +4,7 @@ if (( $EUID != 0 )); then
     echo "Please run as root"
     exit
 fi
-
+this_file_dir=$(dirname -- "${BASH_SOURCE[0]}")
 clear
 echo -e "Before you begin, Please note everything are case sensitive\n"
 
@@ -154,10 +154,11 @@ pacstrap /mnt \
 	e2fsprogs btrfs-progs dosfstools ntfs-3g
 
 mkdir -p /mnt/install/
-cp after-chroot.sh /mnt/install/
-cp install-gnome.sh /mnt/install/
-cp envfile /mnt/install/
-cp -r assets /mnt/install/
+
+cp $this_file_dir/after-chroot.sh /mnt/install/
+cp $this_file_dir/install-gnome.sh /mnt/install/
+cp $this_file_dir/envfile /mnt/install/
+cp -r $this_file_dir/assets /mnt/install/
 
 genfstab -U /mnt >/mnt/etc/fstab
 
