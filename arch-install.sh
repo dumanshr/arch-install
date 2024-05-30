@@ -123,7 +123,7 @@ mkdir -p /mnt/install/
 
 cp $this_file_dir/after-chroot.sh /mnt/install/
 cp $this_file_dir/install-gnome.sh /mnt/install/
-cp $this_file_dir/envfile /mnt/install/
+cp $envfile /mnt/install/
 cp -r $this_file_dir/assets /mnt/install/
 
 genfstab -U /mnt >/mnt/etc/fstab
