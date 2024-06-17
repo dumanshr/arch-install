@@ -16,11 +16,11 @@ pacman -S --needed --noconfirm --overwrite \* \
 	xdg-user-dirs-gtk \
 	xdg-desktop-portal-gnome \
 	gnome-keyring \
-	gnome-text-editor \
 	gvfs-afc gvfs-goa gvfs-google gvfs-onedrive\
 	gvfs-gphoto2 gvfs-mtp gvfs-nfs gvfs-smb \
 	evince totem loupe snapshot \
 	gnome-font-viewer \
+	gnome-characters \
 	gnome-disk-utility \
 	gnome-remote-desktop \
 	gnome-user-share \
