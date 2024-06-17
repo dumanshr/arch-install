@@ -42,10 +42,10 @@ echo "::1 	localhost" >> /etc/hosts
 ROOT_UUID=$(blkid -s UUID -o value $(bootctl -R ))
 
 # For btrfs
-#echo "root=UUID=${ROOT_UUID} rootflags=subvol=@ rw quiet splash nvidia_drm.modeset=1" >/etc/kernel/cmdline
+kernel_cmdline="root=UUID=${ROOT_UUID} rootflags=subvol=@ rw quiet splash"
 
 #ext4
-kernel_cmdline="root=UUID=${ROOT_UUID} rw quiet splash"
+# kernel_cmdline="root=UUID=${ROOT_UUID} rw quiet splash"
 lspci | grep -i nvidia >/dev/null
 nvidia_gpu=$?
 if [[ $nvidia_gpu -eq 0 ]]; then

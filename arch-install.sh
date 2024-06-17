@@ -105,8 +105,14 @@ fi
 if [[ -z $premounted ]]; then
 	echo "Mounting"
 	umount --recursive /mnt
-	mkfs.ext4 -F ${root_partition}
+	mkfs.btrfs -f ${root_partition}
 	mount ${root_partition} /mnt
+	btrfs subvolume create /mnt/@
+	btrfs subvolume create /mnt/@home
+	umount --recursive /mnt
+
+	mount -o subvol=@ ${root_partition} /mnt
+	mount --mkdir -o subvol=@home ${root_partition} /mnt/home
 	mount --mkdir $efi_partition /mnt/efi
 fi
 
