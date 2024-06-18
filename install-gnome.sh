@@ -68,14 +68,3 @@ systemctl enable bluetooth
 mkdir -p /usr/share/nautilus-python/extensions
 curl -o /usr/share/nautilus-python/extensions/open-in-terminal.py https://raw.githubusercontent.com/dumanshr/arch-install/master/assets/open-in-terminal.py
 
-
-curl -o /tmp/config-download.sh https://raw.githubusercontent.com/dumanshr/arch-install/master/assets/config-download.sh
-chmod +x /tmp/config-download.sh
-NORMAL_USER=$(id -un 1000)
-cd /home/${NORMAL_USER}
-su ${NORMAL_USER} /tmp/config-download.sh
-
-
-
-
-
